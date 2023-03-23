@@ -1,11 +1,8 @@
-/**
- * Matrix (N*N) multiplication with multiple threads.
- */
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
 #include <pthread.h>
-
+//end of imports
 int size, num_threads;
 double **matrix1, **matrix2, **matrix3;
 
@@ -25,17 +22,6 @@ double ** allocate_matrix( int size )
   return ptrs;
 }
 
-void init_matrix( double **matrix, int size )
-{
-  int i, j;
-
-  for (i = 0; i < size; ++i) {
-    for (j = 0; j < size; ++j) {
-      matrix[ i ][ j ] = 1.0;
-    }
-  }
-}
-
 void print_matrix( double **matrix, int size )
 {
   int i, j;
@@ -49,13 +35,24 @@ void print_matrix( double **matrix, int size )
   }
 }
 
+void init_matrix( double **matrix, int size )
+{
+  int i, j;
+
+  for (i = 0; i < size; ++i) {
+    for (j = 0; j < size; ++j) {
+      matrix[ i ][ j ] = 1.0; //Benchmarks
+    }
+  }
+}
+
 /**
  * Thread routine.
  * Each thread works on a portion of the 'matrix1'.
  * The start and end of the portion depend on the 'arg' which
  * is the ID assigned to threads sequentially. 
  */
-void * worker( void *arg )
+void * worker( void *arg ) //worker thread
 {
   int i, j, k, tid, portion_size, row_start, row_end;
   double sum;
@@ -80,12 +77,13 @@ void * worker( void *arg )
 
 int main( int argc, char *argv[] )
 {
+  //initializations
   int i;
   double sum = 0;
   struct timeval tstart, tend;
   double exectime;
   pthread_t * threads;
-
+  //Error handling
   if (argc != 3) {
     fprintf( stderr, "%s <matrix size> <number of threads>\n", argv[0], argv[1] );
     return -1;
@@ -93,7 +91,7 @@ int main( int argc, char *argv[] )
 
   size = atoi( argv[1] );
   num_threads = atoi( argv[2] );
-
+    //Just Right
   if ( size % num_threads != 0 ) {
     fprintf( stderr, "size %d must be a multiple of num of threads %d\n",
        size, num_threads );
@@ -103,7 +101,7 @@ int main( int argc, char *argv[] )
   threads = (pthread_t *) malloc( num_threads * sizeof(pthread_t) );
 
   matrix1 = allocate_matrix( size );
-  matrix2 = allocate_matrix( size );
+  matrix2 = allocate_matrix( size ); //using funtions
   matrix3 = allocate_matrix( size );
   
   init_matrix( matrix1, size );
