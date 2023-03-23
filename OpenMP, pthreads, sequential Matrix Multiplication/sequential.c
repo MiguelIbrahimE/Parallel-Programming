@@ -1,4 +1,4 @@
-
+//includes
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
@@ -25,12 +25,12 @@ void init_matrix( double **matrix, int size )
 
   for (i = 0; i < size; ++i) {
     for (j = 0; j < size; ++j) {
-      matrix[ i ][ j ] = 1.0;
+      matrix[ i ][ j ] = 1.0; //Similar to benchmarks
     }
   }
 }
 
-void print_matrix( double **matrix, int size )
+void print_matrix( double **matrix, int size ) //only done when size <10 if size > 10 it will increase overall time
 {
   int i, j;
 
@@ -42,7 +42,7 @@ void print_matrix( double **matrix, int size )
     putchar( '\n' );
   }
 }
-
+//Best Sequential Algorithm with O(n2.37188) time
 int main( int argc, char *argv[] )
 {
   double **matrix1, **matrix2, **matrix3;
@@ -94,8 +94,8 @@ int main( int argc, char *argv[] )
   exectime = (tend.tv_sec - tstart.tv_sec) * 1000.0; // sec to ms
   exectime += (tend.tv_usec - tstart.tv_usec) / 1000.0; // us to ms   
 
-  printf( "Number of MPI ranks: 0\tNumber of threads: 1\tExecution time:%.3lf sec\n",
-          exectime/1000.0);
+  printf( "Number of threads: 1\tExecution time:%.3lf sec\n",
+          exectime/1000.0); 
 
   return 0;
 }
