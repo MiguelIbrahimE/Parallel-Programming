@@ -135,7 +135,7 @@ int main( int argc, char *argv[] )
   exectime = (tend.tv_sec - tstart.tv_sec) * 1000.0; // sec to ms
   exectime += (tend.tv_usec - tstart.tv_usec) / 1000.0; // us to ms   
 
-  printf( "Number of MPI ranks: 0\tNumber of threads: %d\tExecution time:%.3lf sec\n",
+  printf( "tNumber of threads: %d\tExecution time:%.3lf sec\n",
           num_threads, exectime/1000.0);
 
   return 0;
